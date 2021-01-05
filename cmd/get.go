@@ -11,6 +11,7 @@ import (
 	"log"
 	"math/rand"
 	"myctl/services"
+	"os"
 	"time"
 )
 
@@ -20,7 +21,8 @@ type Server struct {
 }
 
 type T struct {
-	Server []Server `yaml:"server"`
+	Server  []Server `yaml:"server"`
+	Current int      `yaml:"current"`
 }
 
 var format string
@@ -73,14 +75,18 @@ func init() {
 	}
 
 	rand.Seed(time.Now().Unix())
-
-	add :=d.Server[rand.Intn(len(d.Server))].Address
+	if d.Current > len(d.Server)-1 {
+		d.Current = 0
+	}
+	add := d.Server[d.Current].Address
 	//fmt.Println(add)
 	conn, err := grpc.Dial(add, grpc.WithInsecure())
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	d.Current = d.Current + 1
+	data, _ := yaml.Marshal(d)
+	ioutil.WriteFile("config.yaml", data, os.ModePerm)
 	//fmt.Println(conn)
 	//defer conn.Close()
 
