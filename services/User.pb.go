@@ -98,11 +98,16 @@ type UserInputRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
-	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
-	Tel      string `protobuf:"bytes,3,opt,name=tel,proto3" json:"tel,omitempty"`
-	Email    string `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
-	Id       int32  `protobuf:"varint,5,opt,name=id,proto3" json:"id,omitempty"`
+	// @inject_tag: yaml:"username"
+	Username string `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty" yaml:"username"`
+	// @inject_tag: yaml:"password"
+	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty" yaml:"password"`
+	// @inject_tag: yaml:"tel"
+	Tel string `protobuf:"bytes,3,opt,name=tel,proto3" json:"tel,omitempty" yaml:"tel"`
+	// @inject_tag: yaml:"email"
+	Email string `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty" yaml:"email"`
+	// @inject_tag: yaml:"id"
+	Id int32 `protobuf:"varint,5,opt,name=id,proto3" json:"id,omitempty" yaml:"id"`
 }
 
 func (x *UserInputRequest) Reset() {
@@ -177,7 +182,8 @@ type UsersInputRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Users []*UserInputRequest `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty"`
+	// @inject_tag: yaml:"users"
+	Users []*UserInputRequest `protobuf:"bytes,1,rep,name=users,proto3" json:"users,omitempty" yaml:"users"`
 }
 
 func (x *UsersInputRequest) Reset() {

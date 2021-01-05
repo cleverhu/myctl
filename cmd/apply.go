@@ -39,36 +39,15 @@ var applyCmd = &cobra.Command{
 				return
 			}
 
-			data := make(map[interface{}]interface{})
-			err = yaml.Unmarshal(file, &data)
-			if err != nil {
-				fmt.Println("unmarshal file error")
-			}
-			fmt.Println(data)
-			var users []*services.UserInputRequest
-			us := data["users"].([]interface{})
-
-			for i := 0; i < len(us); i++ {
-				var id int32
-				m := us[i].(map[interface{}]interface{})
-				if m["id"] != nil {
-					id = int32(m["id"].(int))
-				}
-				users = append(users, &services.UserInputRequest{
-					Username: m["username"].(string),
-					Password: m["password"].(string),
-					Tel:      m["tel"].(string),
-					Email:    m["email"].(string),
-					Id:       id,
-				})
-			}
-			result, err := userClient.AddUsers(context.Background(), &services.UsersInputRequest{Users: users})
+			var users services.UsersInputRequest
+			err = yaml.Unmarshal(file, &users)
+			fmt.Println(users.Users)
+			result, err := userClient.AddUsers(context.Background(), &users)
 			if result.Success {
 				fmt.Println("update success")
 			} else {
 				fmt.Println("update fail")
 			}
-
 		} else {
 			fmt.Println("file name is error")
 		}
