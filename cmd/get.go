@@ -55,10 +55,10 @@ var getCmd = &cobra.Command{
 				data, _ := yaml.Marshal(users)
 				fmt.Printf("%s\n", string(data))
 			} else {
-				fmt.Printf("%-10s\t%-10s%-10s\t%-10s\t%-20s\t%-10s\t\n", "ID", "Name", "Password", "Tel", "Email", "Time")
+				fmt.Printf("%-10s\t%-20s%-10s\t%-10s\t%-20s\t%-10s\t\n", "ID", "Name", "Password", "Tel", "Email", "Time")
 				for i := 0; i < len(users.Users); i++ {
 					m := users.Users[i]
-					fmt.Printf("%-10v\t%-10v%-10v\t%-10v\t%-20v\t%-10v\t\n", m.Id, m.Username, m.Password, m.Tel, m.Email, m.CreateTime)
+					fmt.Printf("%-10v\t%-20v%-10v\t%-10v\t%-20v\t%-10v\t\n", m.Id, m.Username, m.Password, m.Tel, m.Email, m.CreateTime)
 				}
 			}
 		}

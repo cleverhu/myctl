@@ -1,0 +1,1 @@
+go build -o myctl main.go

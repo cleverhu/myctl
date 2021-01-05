@@ -1,0 +1,14 @@
+---
+users:
+  - username: myinputuser
+    password: "111111"
+    tel: "13788888888"
+    email: 123456@qq.com
+  - username: myinputuser1
+    password: "111111"
+    tel: "13788888888"
+    email: 123456@qq.com
+  - username: myinputuser2
+    password: "111111"
+    tel: "13788888888"
+    email: 123456@qq.com
