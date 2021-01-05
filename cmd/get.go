@@ -1,18 +1,3 @@
-/*
-Copyright © 2021 NAME HERE <EMAIL ADDRESS>
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
 package cmd
 
 import (
@@ -22,9 +7,21 @@ import (
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 	"gopkg.in/yaml.v2"
+	"io/ioutil"
 	"log"
+	"math/rand"
 	"myctl/services"
+	"time"
 )
+
+type Server struct {
+	Name    string `yaml:"name"`
+	Address string `yaml:"address"`
+}
+
+type T struct {
+	Server []Server `yaml:"server"`
+}
 
 var format string
 var page int32
@@ -48,10 +45,11 @@ var getCmd = &cobra.Command{
 				Size:   size,
 				Search: "",
 			})
+			fmt.Println(users)
 			if format == "json" {
-				data, _ := json.MarshalIndent(users,"","    ")
+				data, _ := json.MarshalIndent(users, "", "    ")
 				fmt.Printf("%s\n", string(data))
-			} else if format=="yaml"{
+			} else if format == "yaml" {
 				data, _ := yaml.Marshal(users)
 				fmt.Printf("%s\n", string(data))
 			} else {
@@ -67,11 +65,23 @@ var getCmd = &cobra.Command{
 }
 
 func init() {
-	conn, err := grpc.Dial("101.132.107.3:8088", grpc.WithInsecure())
+	d := &T{}
+	file, _ := ioutil.ReadFile("config.yaml")
+	err := yaml.Unmarshal(file, &d)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	rand.Seed(time.Now().Unix())
+
+	add :=d.Server[rand.Intn(len(d.Server))].Address
+	//fmt.Println(add)
+	conn, err := grpc.Dial(add, grpc.WithInsecure())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	//fmt.Println(conn)
 	//defer conn.Close()
 
 	userClient = services.NewUserServiceClient(conn)

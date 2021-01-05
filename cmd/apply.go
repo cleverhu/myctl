@@ -41,8 +41,8 @@ var applyCmd = &cobra.Command{
 
 			var users services.UsersInputRequest
 			err = yaml.Unmarshal(file, &users)
-			fmt.Println(users.Users)
 			result, err := userClient.AddUsers(context.Background(), &users)
+			fmt.Println(result)
 			if result.Success {
 				fmt.Println("update success")
 			} else {

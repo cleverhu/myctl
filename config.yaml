@@ -1,0 +1,7 @@
+---
+server :
+  - name: server1
+    address: 101.132.107.3:8088
+  - name: server2
+    address: 101.132.107.3:8089
+
