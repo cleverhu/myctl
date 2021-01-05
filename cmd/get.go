@@ -49,7 +49,7 @@ var getCmd = &cobra.Command{
 				Search: "",
 			})
 			if format == "json" {
-				data, _ := json.Marshal(users)
+				data, _ := json.MarshalIndent(users,"","    ")
 				fmt.Printf("%s\n", string(data))
 			} else if format=="yaml"{
 				data, _ := yaml.Marshal(users)
