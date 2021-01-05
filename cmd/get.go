@@ -25,6 +25,8 @@ type T struct {
 	Current int      `yaml:"current"`
 }
 
+const PATH = "/.my/config"
+
 var format string
 var page int32
 var size int32
@@ -68,7 +70,9 @@ var getCmd = &cobra.Command{
 
 func init() {
 	d := &T{}
-	file, _ := ioutil.ReadFile("config.yaml")
+	home := os.Getenv("HOME")
+	//fmt.Println(home)
+	file, _ := ioutil.ReadFile(home + PATH)
 	err := yaml.Unmarshal(file, &d)
 	if err != nil {
 		log.Fatal(err)
@@ -86,7 +90,7 @@ func init() {
 	}
 	d.Current = d.Current + 1
 	data, _ := yaml.Marshal(d)
-	ioutil.WriteFile("config.yaml", data, os.ModePerm)
+	ioutil.WriteFile(home+PATH, data, os.ModePerm)
 	//fmt.Println(conn)
 	//defer conn.Close()
 
