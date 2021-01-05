@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
+	"gopkg.in/yaml.v2"
 	"log"
 	"myctl/services"
 )
@@ -49,6 +50,9 @@ var getCmd = &cobra.Command{
 			})
 			if format == "json" {
 				data, _ := json.Marshal(users)
+				fmt.Printf("%s\n", string(data))
+			} else if format=="yaml"{
+				data, _ := yaml.Marshal(users)
 				fmt.Printf("%s\n", string(data))
 			} else {
 				fmt.Printf("%-10s\t%-10s%-10s\t%-10s\t%-20s\t%-10s\t\n", "ID", "Name", "Password", "Tel", "Email", "Time")
